@@ -1,0 +1,26 @@
+<fieldset class="scheduler-border p-1 m-1">
+    <legend class="scheduler-border">FILTROS DE BUSQUEDA:</legend>
+    <form [formGroup]="formBusqueda" class="p-0 m-0">
+        <div class="form-group p-1 m-0">
+            <label for="txtNombreID" class="p-0 m-0">Nombre:</label>
+            <input type="text" class="form-control form-control-xs-2 p-0 m-0" placeholder="Nombres" id="txtNombreID"
+                (keyup.enter)="buscarDepositosFilters()" formControlName="primernombre">
+        </div>
+        <div class="form-group p-1 m-0">
+            <label for="txtApellidoID" class="p-0 m-0">Apellido:</label>
+            <input type="text" class="form-control form-control-xs-2 p-0 m-0" placeholder="Apellidos" id="txtApellidoID"
+                (keyup.enter)="buscarDepositosFilters()" formControlName="primerapellido">
+        </div>
+        <div class="form-group p-1 m-0">
+            <label for="txtCedulaID" class="p-0 m-0">Cedula:</label>
+            <input type="text" class="form-control form-control-xs-2" placeholder="Cedula" id="txtCedulaID"
+                (keyup.enter)="buscarDepositosFilters()" formControlName="cedula">
+        </div>
+        <div class="form-group p-1 m-0 text-center">
+            <button type="submit" class="btn btn-primary form-control-xs-2 m-1"
+                (click)="buscarDepositos()">Busqueda</button>
+                <button type="submit" class="btn btn-danger form-control-xs-2"
+                (click)="cancelDepositos()">Cancelar</button>
+        </div>
+    </form>
+</fieldset>

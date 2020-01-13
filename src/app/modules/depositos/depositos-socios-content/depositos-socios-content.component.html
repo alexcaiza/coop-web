@@ -1,0 +1,34 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Socios</h3>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover table-sm table-condensed table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th>Cedula</th>
+                    <th>Nombre</th>
+                    <th>Manzana</th>
+                    <th>Lote</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let deposito of personas">
+                    <td>{{ deposito.cedula }}</td>
+                    <td>                        
+                        {{ deposito.primerapellido }}
+                        {{ deposito.primernombre }} 
+                    </td>
+                    <td>
+                        {{ deposito.manzana }}
+                    </td>
+                    <td>
+                        {{ deposito.numerolote }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

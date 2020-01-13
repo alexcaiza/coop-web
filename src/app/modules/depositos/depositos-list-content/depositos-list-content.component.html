@@ -1,0 +1,53 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Depositos</h3>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover table-sm table-condensed table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th>Cedula</th>
+                    <th>Nombre</th>
+                    <th>Deposito</th>
+                    <th>Valor</th>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let deposito of depositos">
+                    <td>{{ deposito.cedula }}</td>
+                    <td>
+                        {{ deposito.primernombre }} {{ deposito.segundonombre }}
+                        {{ deposito.primerapellido }} {{ deposito.segundoapellido }}
+                    </td>
+                    <td>
+                        {{ deposito.numerodeposito }}
+                    </td>
+                    <td>
+                        {{ deposito.valordeposito }}
+                    </td>
+                    <td>
+                        {{ deposito.fechadeposito | date: 'yyyy-MM-dd' }}
+                    </td>
+                    <td>
+                        {{ deposito.tipodeposito }}
+                    </td>
+                    <td>
+                        <!--
+                        <a [routerLink]="['/edit', deposito.id]" class="btn btn-primary btn-sm fontsize">Edit</a>
+                        -->
+                        <a class="btn btn-sm btn-default float-left align-top form-control-xs" routerLinkActive="active"
+                            (click)="buscarDepositos()" aria-label="Settings">
+                            <i class="fa fa-edit" aria-hidden="true"></i>
+                        </a>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

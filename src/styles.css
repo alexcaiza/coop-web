@@ -1,0 +1,155 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 11px;
+}
+
+.wrapper_layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 30px 1fr 30px;
+    grid-template-areas:
+    "header"
+    "content"
+    "footer";
+    grid-gap: 3px;
+    height: 100vh;
+}
+
+.wrapper_content {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 30px 1fr;
+    grid-template-areas:
+    "menubar"
+    "content";
+    grid-gap: 2px;
+    /*
+    height: 100vh;
+    */
+    height: 100%;    
+}
+
+.wrapper_search {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+    "leftCol content";
+    grid-gap: 2px;
+    /*
+    height: 100vh;
+    */
+    height: 100%;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 2fr 4fr 4fr 1fr;
+    grid-template-rows: 30px 30px 1fr 30px;
+    grid-template-areas:
+    "header header header header"
+    "menubar menubar menubar menubar"
+    "leftCol content content content"
+    "footer footer footer footer";
+    grid-gap: 5px;
+    height: 100vh;
+}
+
+.menubar{
+    grid-area: menubar;
+    /*
+    background-color: silver ;
+    */
+}
+
+app-header{
+    grid-area: header;
+    /*
+    background-color: LightSeaGreen ;
+    */
+}
+   
+.leftCol{
+    grid-area: leftCol;
+    /*
+    background-color: orange;
+    */
+}
+   
+.rightCol{
+    grid-area: rightCol;
+    background-color: lightblue;
+}
+
+.content{
+    grid-area: content;
+    /*
+    background-color: lightgrey;
+    */
+    overflow: auto;
+}
+   
+.midTop{
+    grid-area: midTop;
+    background-color: lightgrey;
+}
+   
+.midBottom{
+    grid-area: midBottom;
+    background-color: pink;
+}
+   
+  .footer{
+    grid-area: footer;
+    background-color: lightgreen;
+  }
+
+.navbar{
+    min-height:30px;
+}
+
+.navbar  a {
+    font-size: 11.0px;
+}
+
+.form-control-xs {
+    height: calc(1em + .375rem + 2px) !important;
+    padding: .125rem .25rem !important;
+    font-size: .6rem !important;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
+
+.form-control-xs-2 {
+    height: calc(1em + .375rem + 6px) !important;
+    padding: .125rem .25rem !important;
+    font-size: .6rem !important;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
+
+fieldset {
+	/*background-color: rgba(111, 66, 193, 0.3);*/
+    border-radius: 1px;
+    border: 1px groove #ddd !important;
+}
+
+legend {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	color: var(--purple);
+	font-size: 10px;
+	font-weight: bold;
+	padding: 3px 5px 3px 7px;
+	width: auto;
+}
+
+::ng-deep .dropdown-menu { 
+    max-height: 175px; 
+    font-size: 11px;
+    display: block;
+    overflow-y: auto;
+}
