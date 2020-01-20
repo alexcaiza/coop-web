@@ -1,3 +1,4 @@
+import { MessagesAppService } from './../../../services/messages-app/messages-app.service';
 import { PagoCuotaLote } from './../../../models/PagoCuotaLote';
 import { CuotasService } from './../../../servicios/cuotas/cuotas.service';
 import { Deposito } from './../../../models/Deposito';
@@ -45,7 +46,7 @@ export class PagosModalComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private cuotasService: CuotasService,
-    //public flashMessagesService: FlashMessagesService,
+    private messagesService: MessagesAppService,
     ) { }
 
   ngOnInit() {
@@ -68,7 +69,7 @@ export class PagosModalComponent implements OnInit {
       }
     });
 
-    this.modalRef = this.modalService.open(this.childmodalpago);
+    this.modalRef = this.modalService.open(this.childmodalpago, { size: 'xl' });
     this.modalRef.result.then(result => {}, reason => {});
   }
 
@@ -144,21 +145,21 @@ export class PagosModalComponent implements OnInit {
     // VALIDA LOS DATOS DE LA CUOTA
     if (this.pago.codigocuota == null) {
       this.mensaje = 'Ingrese el tipo de cuota a pagar.';
-      //.flashMessagesService.show(this.mensaje, { cssClass: 'alert-danger', timeout: 5000 });
+      this.messagesService.warning(this.mensaje);
       return;
     }
 
     // VALIDA LOS DATOS DE LA PERSONA
     if (this.pago.codigopersona == null) {
       this.mensaje = 'Ingrese la cedula de la persona.';
-      //this.flashMessagesService.show(this.mensaje, { cssClass: 'alert-danger', timeout: 5000 });
+      this.messagesService.warning(this.mensaje);
       return;
     }
 
     // VALIDA LOS DATOS DEL LOTE
     if (this.pago.codigolote == null) {
       this.mensaje = 'Ingrese el lote para pagar la cuota pendiente.';
-      //this.flashMessagesService.show(this.mensaje, { cssClass: 'alert-danger', timeout: 5000 });
+      this.messagesService.warning(this.mensaje);
       return;
     }
 
@@ -168,7 +169,7 @@ export class PagosModalComponent implements OnInit {
 
     if (deposito == null || deposito === '') {
       this.mensaje = 'Ingrese el numero del deposito.';
-      //this.flashMessagesService.show(this.mensaje, { cssClass: 'alert-danger', timeout: 5000 });
+      this.messagesService.warning(this.mensaje);
       return;
     }
 
@@ -178,12 +179,7 @@ export class PagosModalComponent implements OnInit {
     let valorPendienteDeposito: Number = (Number(valorDeposito) - Number(valorUtilizadoDeposito));
     if (valorUtilizadoDeposito >= valorDeposito) {
       this.mensaje = 'El deposito ('+deposito.numerodeposito+') del socio ('+this.pago.cedula+') esta utilizado completamente.'; 
-      /*
-      this.flashMessagesService.show(
-        this.mensaje, 
-        { cssClass: 'alert-warning', timeout: 5000 }
-        );
-        */
+      this.messagesService.warning(this.mensaje);
       return;
     }
 
@@ -193,19 +189,19 @@ export class PagosModalComponent implements OnInit {
 
     if (valorPagoCuotaLote == null || valorPagoCuotaLote === '') {
       this.mensaje = 'Ingrese el valor del pago de la cuota.';
-      //this.flashMessagesService.show(this.mensaje, { cssClass: 'alert-danger', timeout: 5000 });
+      this.messagesService.error(this.mensaje);
       return;
     }
 
     if (valorPagoCuotaLote <= 0) {
       this.mensaje = 'El valor del pago de la cuota tiene que ser mayor a cero (0).';
-      //this.flashMessagesService.show(this.mensaje, { cssClass: 'alert-danger', timeout: 5000 });
+      this.messagesService.error(this.mensaje);
       return;
     }
 
     if (valorPagoCuotaLote > valorPendienteDeposito) {
       this.mensaje = 'El valor del pago de la cuota no tiene que ser mayor al valor pendiente del deposito seleccionado (' + valorPendienteDeposito + ').';
-      //this.flashMessagesService.show(this.mensaje, { cssClass: 'alert-danger', timeout: 5000 });
+      this.messagesService.error(this.mensaje);
       return;
     }
 
@@ -215,7 +211,7 @@ export class PagosModalComponent implements OnInit {
 
     if (valorpagocuotaloteN > valorcuotaN) {
       this.mensaje = 'El valor del pago de la cuota no puede ser mayor al valor de la cuota ('+valorpagocuotaloteN+' - '+valorcuotaN+').';
-      //this.flashMessagesService.show(this.mensaje, { cssClass: 'alert-danger', timeout: 5000 });
+      this.messagesService.error(this.mensaje);
       return;
     }
 
@@ -224,7 +220,7 @@ export class PagosModalComponent implements OnInit {
     
     if (valorpagopendienteN > 0 && valorpagocuotaloteN > valorpagopendienteN) {
       this.mensaje = 'El valor del pago de la cuota no puede ser mayor al valor pendiente de la cuota ('+valorpagocuotaloteN+' - '+valorpagopendienteN+').';
-      //this.flashMessagesService.show(this.mensaje, { cssClass: 'alert-danger', timeout: 5000 });
+      this.messagesService.error(this.mensaje);
       return;
     }
 
@@ -236,16 +232,9 @@ export class PagosModalComponent implements OnInit {
     
     if (this.valorpagocuotaloteTotal >= valorCuota) {
       this.mensaje = 'La cuota ('+this.pago.descripcioncuota+') del lote ('+this.pago.codigoreferencia+') esta pagada completamente.'; 
-      /*
-      this.flashMessagesService.show(
-        this.mensaje, 
-        { cssClass: 'alert-warning', timeout: 5000 }
-        );
-        */
+      this.messagesService.warning(this.mensaje);
       return;
     }
-
-    //
 
     const datos : any = this.formModalPago.value;
 
@@ -264,12 +253,13 @@ export class PagosModalComponent implements OnInit {
       console.log("response:");
       console.log(response);
 
-      //this.mensaje = 'El registro del pago de la cuota '+  datos.valorpagocuotalote +' del socio ' + this.pago.cedula + ' se realizo correctamente.';
+      this.mensaje = 'El registro del pago de la cuota '+  datos.valorpagocuotalote +' del socio ' + this.pago.cedula + ' se realizo correctamente.';
 
       if (response.pagocuotalote && response.pagocuotalote.codigopagocuotalote !== null && response.pagocuotalote.codigopagocuotalote > 0) {
-        //this.flashMessagesService.show(this.mensaje, { cssClass: 'alert-success', timeout: 6000 });
         this.createForm();
         this.modalRef.close();
+
+        this.messagesService.info(this.mensaje);
       }
       else {
         //this.flashMessagesService.show(response.mensaje, { cssClass: 'alert-danger', timeout: 3000 });

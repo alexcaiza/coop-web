@@ -1,0 +1,59 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Asistencias</h3>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="panel-body">
+    <div style="margin-top: 1px;">
+        <table class="table table-hover table-sm table-bordered table-condensed table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Cedula</th>
+                    <th class="text-center">Lote</th>
+                    <th class="text-center">Lote anterior</th>
+                    <th class="text-center">Reunion</th>
+                    <th class="text-center">Asistencia</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let pago of asistencias; let i=index">
+                    <td>
+                        {{ i+1 }}
+                    </td>
+                    <td>
+                        {{ pago.primerapellido }} {{ pago.primernombre }}
+                    </td>
+                    <td>{{ pago.cedula }}</td>
+                    <td>
+                        {{ pago.codigoreferencia }}
+                    </td>
+                    <td>
+                        {{ pago.codigoreferenciaanterior }}
+                    </td>
+                    <td>
+                        {{ pago.nombrereunion }}
+                    </td>
+                    <td>
+                        {{ pago.valorasistencia }}
+                    </td>
+                    <td class="text-center">
+                        <!--
+                        <a [routerLink]="['/edit', deposito.id]" class="btn btn-primary btn-sm fontsize">Edit</a>
+                        -->
+                        <a 
+                            class="btn btn-sm btn-default align-top form-control-xs" 
+                            (click)="openModalPago(pago)"
+                            aria-label="Settings">
+                            <i class="fa fa-edit" aria-hidden="true"></i>
+                        </a>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

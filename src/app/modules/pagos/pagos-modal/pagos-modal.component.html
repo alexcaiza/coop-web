@@ -4,9 +4,9 @@
 		<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" aria-hidden="true">
         <span aria-hidden="true">&times;</span>
       </button>
-	</div>
-	<form [formGroup]="formModalPago" (ngSubmit)="savePagoCuotaLote()">
-		<div class="modal-body">
+	</div>	
+    <div class="modal-body">
+        <form [formGroup]="formModalPago" (ngSubmit)="savePagoCuotaLote()">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="textValorCuota" class="col-sm-4 col-form-label col-form-label-sm">Cuota:</label>
@@ -35,12 +35,14 @@
                     </div>
                 </div>
             </div>
-            <ng-template #rt let-r="result" let-t="term" style="size: 11px;">
-                <tr style="font-size: 11px;">
-                    <td style="width: 100px; margin-left: 10px; margin-right: 10px;"> <span style="color: #FF7043"> {{ r.fechadeposito | date:"yyyy-MM-dd" }} </span> </td>                    
-                    <td style="width: 60px; margin-left: 10px; margin-right: 10px;" title=" {{ r.codigodeposito }} "> {{ r.numerodeposito }} </td>
-                    <td style="width: 60px; margin-left: 10px; margin-right: 10px;"> {{ r.valordeposito }} <span>$</span> </td>
-                    <td style="width: 60px; margin-left: 10px; margin-right: 10px;"> {{ r.valorutilizado }} <span>$</span> </td>
+            <ng-template #rt let-r="result" let-t="term" style="size: 12px;">
+                <tr style="font-size: 12px;">
+                    <!--
+                    <td style="width: 100px; margin-left: 10px; margin-right: 10px;"> <span style="color: #FF7043"> {{ r.fechadeposito | date:"yyyy-MM-dd" }} </span> </td>
+                    -->
+                    <td style="width: 100px; margin-left: 15px; margin-right: 15px;" title=" {{ r.codigodeposito }} "> {{ r.numerodeposito }} </td>
+                    <td style="width: 60px; margin-left: 15px; margin-right: 15px;"> {{ r.valordeposito }} <span>$</span> </td>
+                    <td style="width: 60px; margin-left: 15px; margin-right: 15px;"> {{ r.valorutilizado }} <span>$</span> </td>
                 </tr>
             </ng-template>
 
@@ -96,10 +98,17 @@
                         
                 </div>
             </div>
-		</div>
-		<div class="modal-footer">
-			<button type="submit" class="btn btn-outline-primary btn-sm ml-1">Guardar</button>
-			<button type="button" class="btn btn-outline-danger btn-sm" (click)="hideModal()">Cancelar</button>
-		</div>
-	</form>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button 
+            type="button" 
+            class="btn btn-outline-primary btn-sm ml-1"
+            (click)="savePagoCuotaLote()">Guardar</button>
+        <button 
+            type="button" 
+            class="btn btn-outline-danger btn-sm" 
+            (click)="hideModal()">Cancelar</button>
+    </div>
+	
 </ng-template>

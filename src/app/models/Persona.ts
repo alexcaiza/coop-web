@@ -10,7 +10,12 @@ export class Persona {
     segundonombre: String;
     primerapellido: String;
     segundoapellido: String;
+
+    // datos del lote
     codigoreferencia: String;
     manzana: String;
     numerolote: String;
+    codigoreferenciaanterior: String;
+    manzanaanterior: String;
+    numeroloteanterior: String;
   }

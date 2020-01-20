@@ -2,18 +2,6 @@
     <legend class="scheduler-border">FILTROS DE BUSQUEDA:</legend>
     <form [formGroup]="formBusqueda" class="p-0 m-0">
         <div class="form-group p-1 m-0">
-            <label for="txtNombreID" class="p-0 m-0">Nombre:</label>
-            <input 
-                class="form-control form-control-xs-2 py-2 border" 
-                name="txtNombreID"
-                id="txtNombreID" 
-                type="text"                             
-                formControlName="nombresocio"
-                placeholder="Nombre"
-                >
-        </div>
-
-        <div class="form-group p-1 m-0">
             <label for="txtApellidoID" class="p-0 m-0">Apellido:</label>
             <input 
                 class="form-control form-control-xs-2 py-2 border" 
@@ -24,7 +12,17 @@
                 placeholder="Apellido"
                 >
         </div>
-
+        <div class="form-group p-1 m-0">
+            <label for="txtNombreID" class="p-0 m-0">Nombre:</label>
+            <input 
+                class="form-control form-control-xs-2 py-2 border" 
+                name="txtNombreID"
+                id="txtNombreID" 
+                type="text"                             
+                formControlName="nombresocio"
+                placeholder="Nombre"
+                >
+        </div>
         <div class="form-group p-1 m-0">
             <label for="txtCedulaID" class="p-0 m-0">Cedula:</label>
             <input 

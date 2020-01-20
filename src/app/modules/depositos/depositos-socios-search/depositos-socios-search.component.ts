@@ -1,3 +1,4 @@
+import { MessagesAppService } from './../../../services/messages-app/messages-app.service';
 import { SiblingService } from './../../services-sibling/sibling.service';
 import { Observable } from 'rxjs';
 import { CuotasService } from './../../../servicios/cuotas/cuotas.service';
@@ -21,7 +22,8 @@ export class DepositosSociosSearchComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private cuotasService: CuotasService,
-    private siblingService: SiblingService
+    private siblingService: SiblingService,
+    private messagesService: MessagesAppService,
   ) {
     this.createFormBusqueda();
   }
@@ -43,10 +45,20 @@ export class DepositosSociosSearchComponent implements OnInit {
   buscarSocios() {
     console.log('METODO: buscarSocios()');
     this.cuotasService.readPersonas2(this.formBusqueda.value).subscribe((personas: Persona[]) => {
+      
       this.personas = personas;
       console.log(this.personas);
-      //this.flashMessagesService.show('La busqueda de depositos se realizo correctamente.', { cssClass: 'alert-success', timeout: 4000 });
+      
       this.siblingService.setPersonas(this.personas);
+      
+      if (this.personas) {
+        if (this.personas.length > 0) {
+          this.messagesService.success('La busqueda se realizo correctamente.');
+        } else {
+          this.messagesService.warning('No se encontraron registros con los datos de busqueda');
+        }
+      }
+
     });    
   }
 

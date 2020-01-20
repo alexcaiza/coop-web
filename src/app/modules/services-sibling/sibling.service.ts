@@ -8,12 +8,19 @@ import { Observable, Subject, BehaviorSubject } from 'rxjs'
 export class SiblingService {
 
   public subjectDepositos = new BehaviorSubject(null);
-  public subjectPersonas = new BehaviorSubject(null);
-  public subjectPagos = new BehaviorSubject(null);
-  
   public siblingDepositos$ = this.subjectDepositos.asObservable();
+
+  public subjectPersonas = new BehaviorSubject(null);
   public siblingPersonas$ = this.subjectPersonas.asObservable();
+  
+  public subjectPagos = new BehaviorSubject(null);
   public siblingPagos$ = this.subjectPagos.asObservable();
+  
+  public subjectAsistencias = new BehaviorSubject(null);
+  public siblingAsistencias$ = this.subjectAsistencias.asObservable();
+
+  public subjectReporteReunionesSociosAucentes = new BehaviorSubject(null);
+  public siblingReporteReunionesSociosAucentes$ = this.subjectReporteReunionesSociosAucentes.asObservable();
 
   constructor() { }
 
@@ -27,6 +34,14 @@ export class SiblingService {
 
   public setPagos(data:any) {
     this.subjectPagos.next(data);
+  }
+
+  public setAsistencias(data:any) {
+    this.subjectAsistencias.next(data);
+  }
+  
+  public setReporteReunionesSociosAucentes(data:any) {
+    this.subjectReporteReunionesSociosAucentes.next(data);
   }
 
 }

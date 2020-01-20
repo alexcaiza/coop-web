@@ -1,3 +1,5 @@
+import { AsistenciaListComponent } from './modules/asistencias/asistencia-list/asistencia-list.component';
+import { AsistenciaMainComponent } from './modules/asistencias/asistencia-main/asistencia-main.component';
 import { DepositosCreateComponent } from './modules/depositos/depositos-create/depositos-create.component';
 import { PagosListComponent } from './modules/pagos/pagos-list/pagos-list.component';
 import { DepositosSociosComponent } from './modules/depositos/depositos-socios/depositos-socios.component';
@@ -8,11 +10,26 @@ import { DepositosMainComponent } from './modules/depositos/depositos-main/depos
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './main/main.component';
+import { ReporteReunionesSociosAucentesComponent } from './reportes/reporte-reuniones-socios-aucentes/reporte-reuniones-socios-aucentes.component';
 //import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { path: 'home', component: MainComponent },
+    { 
+        path: 'asistencia', 
+        component: AsistenciaMainComponent,
+        children: [
+            {
+              path: 'asistencia-list',
+              component: AsistenciaListComponent
+            },
+            {
+                path: 'reporte-reuniones-socios-aucentes',
+                component: ReporteReunionesSociosAucentesComponent
+              },
+        ]
+    },
     { 
         path: 'depositos', 
         component: DepositosMainComponent,

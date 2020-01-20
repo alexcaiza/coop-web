@@ -7,15 +7,17 @@
         <table class="table table-hover table-sm table-condensed table-striped">
             <thead class="thead-light">
                 <tr>
+                    <th>No.</th>
                     <th>Cedula</th>
                     <th>Nombre</th>
-                    <th>Manzana</th>
-                    <th>Lote</th>
+                    <th>Lote actual</th>
+                    <th>Lote anterior</th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr *ngFor="let deposito of personas">
+                <tr *ngFor="let deposito of personas; let i = index">
+                    <td>{{ i+1 }}</td>
                     <td>{{ deposito.cedula }}</td>
                     <td>                        
                         {{ deposito.primerapellido }}
@@ -23,9 +25,13 @@
                     </td>
                     <td>
                         {{ deposito.manzana }}
+                        -
+                        {{ deposito.numerolote }}
                     </td>
                     <td>
-                        {{ deposito.numerolote }}
+                        {{ deposito.manzanaanterior }}
+                        -
+                        {{ deposito.numeroloteanterior }}
                     </td>
                 </tr>
             </tbody>

@@ -1,3 +1,4 @@
+import { MessagesAppService } from './../../../services/messages-app/messages-app.service';
 import { SiblingService } from './../../services-sibling/sibling.service';
 
 import { DepositosService } from './../../../servicios/depositos/depositos.service';
@@ -19,7 +20,8 @@ export class DepositosListSearchComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private depositosService: DepositosService,
-    private siblingService: SiblingService
+    private siblingService: SiblingService,
+    private messagesService : MessagesAppService
   ) {
     this.createFormBusqueda();
   }
@@ -45,13 +47,18 @@ export class DepositosListSearchComponent implements OnInit {
   buscarDepositos() {
     console.log('METODO: buscarDepositos()');
     this.depositosService.readDepositos(this.formBusqueda.value).subscribe((depositos: Deposito[]) => {
+      
       this.depositos = depositos;
+      
       console.log(this.depositos);
-      //this.flashMessagesService.show('La busqueda de depositos se realizo correctamente.', { cssClass: 'alert-success', timeout: 4000 });
+      
       this.siblingService.setDepositos(this.depositos);
+      if (this.depositos.length > 0) {
+        this.messagesService.info('La busqueda de depositos se realizo correctamente.');
+      } else{
+        this.messagesService.warning('No se encontraron registros con los datos de busqueda.');
+      }
     });
-
-    
   }
 
   cancelDepositos() {

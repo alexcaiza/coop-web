@@ -1,3 +1,4 @@
+import { MessagesAppService } from './services/messages-app/messages-app.service';
 import { SiblingService } from './modules/services-sibling/sibling.service';
 
 import { AppRoutingModule } from './app-routing.component';
@@ -5,8 +6,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { FlashMessagesModule } from 'ngx-flash-messages';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -32,6 +35,16 @@ import { PagosListSearchComponent } from './modules/pagos/pagos-list-search/pago
 import { PagosListContentComponent } from './modules/pagos/pagos-list-content/pagos-list-content.component';
 import { PagosModalComponent } from './modules/pagos/pagos-modal/pagos-modal.component';
 import { DepositosCreateComponent } from './modules/depositos/depositos-create/depositos-create.component';
+import { AsistenciaMainComponent } from './modules/asistencias/asistencia-main/asistencia-main.component';
+import { AsistenciaListComponent } from './modules/asistencias/asistencia-list/asistencia-list.component';
+import { AsistenciaListContentComponent } from './modules/asistencias/asistencia-list-content/asistencia-list-content.component';
+import { AsistenciaListSearchComponent } from './modules/asistencias/asistencia-list-search/asistencia-list-search.component';
+import { AsistenciaNavbarComponent } from './modules/asistencias/asistencia-navbar/asistencia-navbar.component';
+import { ReporteReunionesSociosAucentesComponent } from './reportes/reporte-reuniones-socios-aucentes/reporte-reuniones-socios-aucentes.component';
+import { ReporteReunionesSociosAucentesListComponent } from './reportes/reporte-reuniones-socios-aucentes/reporte-reuniones-socios-aucentes-list/reporte-reuniones-socios-aucentes-list.component';
+import { ReporteReunionesSociosAucentesContentComponent } from './reportes/reporte-reuniones-socios-aucentes/reporte-reuniones-socios-aucentes-content/reporte-reuniones-socios-aucentes-content.component';
+import { ReporteReunionesSociosAucentesSearchComponent } from './reportes/reporte-reuniones-socios-aucentes/reporte-reuniones-socios-aucentes-search/reporte-reuniones-socios-aucentes-search.component';
+
 
 @NgModule({
   declarations: [
@@ -58,7 +71,16 @@ import { DepositosCreateComponent } from './modules/depositos/depositos-create/d
     PagosListSearchComponent,
     PagosListContentComponent,
     PagosModalComponent,
-    DepositosCreateComponent
+    DepositosCreateComponent,
+    AsistenciaMainComponent,
+    AsistenciaListComponent,
+    AsistenciaListContentComponent,
+    AsistenciaListSearchComponent,
+    AsistenciaNavbarComponent,
+    ReporteReunionesSociosAucentesComponent,
+    ReporteReunionesSociosAucentesListComponent,
+    ReporteReunionesSociosAucentesContentComponent,
+    ReporteReunionesSociosAucentesSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -66,9 +88,13 @@ import { DepositosCreateComponent } from './modules/depositos/depositos-create/d
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    FlashMessagesModule
   ],
-  providers: [SiblingService],
+  providers: [
+    SiblingService,
+    MessagesAppService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

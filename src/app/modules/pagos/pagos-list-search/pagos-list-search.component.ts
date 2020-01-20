@@ -1,3 +1,4 @@
+import { MessagesAppService } from './../../../services/messages-app/messages-app.service';
 import { SiblingService } from './../../services-sibling/sibling.service';
 import { CuotasService } from './../../../servicios/cuotas/cuotas.service';
 import { Lote } from './../../../models/Lote';
@@ -49,17 +50,16 @@ export class PagosListSearchComponent implements OnInit {
   public clickCuota$ = new Subject<Cuota>();
 
   public focusPersona$ = new Subject<Persona>();
-  clickPersona$ = new Subject<Persona>();
+  public clickPersona$ = new Subject<Persona>();
 
   public focusLote$ = new Subject<Lote>();
   public clickLote$ = new Subject<Lote>();
 
   constructor(
     private formBuilder: FormBuilder,
-    //public flashMessagesService: FlashMessagesService,
-    //private eventEmitterService: EventEmitterService,
     private cuotasService: CuotasService,
-    private siblingService: SiblingService
+    private siblingService: SiblingService,
+    private messagesService: MessagesAppService,
   ) { }
 
   ngOnInit() {
@@ -147,6 +147,12 @@ export class PagosListSearchComponent implements OnInit {
         this.pagos = response.data;
         console.log(this.pagos);
         this.siblingService.setPagos(this.pagos);
+
+        if (this.pagos.length > 0) {
+          this.messagesService.success('La busqueda se realizo correctamente.');
+        } else {
+          this.messagesService.warning('No se encontraron registros con los datos de busqueda.');
+        }
       }
     });
 
