@@ -11,12 +11,13 @@ import { Observable, Subject, merge } from 'rxjs';
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, distinctUntilChanged, switchMap, catchError, map, filter  } from 'rxjs/operators';
 
+
 @Component({
-  selector: 'app-pagos-modal',
-  templateUrl: './pagos-modal.component.html',
-  styleUrls: ['./pagos-modal.component.css']
+  selector: 'app-asistencia-modal',
+  templateUrl: './asistencia-modal.component.html',
+  styleUrls: ['./asistencia-modal.component.css']
 })
-export class PagosModalComponent implements OnInit {
+export class AsistenciaModalComponent implements OnInit {
 
   public mensaje: string;
   public titleModal: string;
@@ -30,14 +31,14 @@ export class PagosModalComponent implements OnInit {
 
   modelDeposito: any;
 
-  valorpagocuotaloteTotal: Number;  
+  public valorpagoTotal: Number;  
 
   private modalRef: NgbModalRef;
 
   formModalPago: FormGroup;
 
-  @ViewChild("childmodalpago", { static: false }) 
-  childmodalpago: any;
+  @ViewChild("childmodalasistencia", { static: false }) 
+  childmodalasistencia: any;
 
   @ViewChild('instanceDeposito', {static: true}) 
   instanceDeposito: NgbTypeahead;
@@ -45,7 +46,7 @@ export class PagosModalComponent implements OnInit {
   focusDeposito$ = new Subject<Deposito>();
   clickDeposito$ = new Subject<Deposito>();
 
-  constructor(
+  constructor( 
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private cuotasService: CuotasService,
@@ -53,10 +54,13 @@ export class PagosModalComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    console.log("METODO: constructor()");
     this.createForm();
   }
 
-  openModal(pago: Pago, titleModal: string, pagoType: PagoType) {
+  openModalAsistencia(pago: Pago, titleModal: string, pagoType: PagoType) {
+
+    console.log("METODO: openModal()");
     
     this.pago = pago;
     this.titleModal = titleModal;
@@ -64,33 +68,36 @@ export class PagosModalComponent implements OnInit {
 
     this.createForm();
 
-    this.valorpagocuotaloteTotal = 0;
+    this.valorpagoTotal = 0;
 
-    this.cuotasService.consultarPagoCuotaLoteSum(this.pago.codigocuota, this.pago.codigolote).subscribe((data: any) => {
+    this.cuotasService.consultarPagoCuotaLoteSum2(this.pago.codigocuota, this.pago.codigolote, this.pago.codigoreunion).subscribe((data: any) => {
       console.log(data);
       console.log(data.data);
       console.log(data.data.valorpago);
       if (data && data.data && data.data.valorpago) {
-        this.valorpagocuotaloteTotal = data.data.valorpago;
+        this.valorpagoTotal = data.data.valorpago;
       }
     });
 
-    this.modalRef = this.modalService.open(this.childmodalpago, { size: 'xl' });
+    this.modalRef = this.modalService.open(this.childmodalasistencia, { size: 'xl' });
     this.modalRef.result.then(result => {}, reason => {});
   }
 
   hideModal() {
+    console.log("METODO: hideModal()");
     this.modalRef.close();
   }
 
   private createForm() {
+
+    console.log("METODO: createForm()");
 
     this.mensaje = '';
 
     this.modelDeposito = null;
     this.deposito = null;
     
-    this.valorpagocuotaloteTotal = null;
+    this.valorpagoTotal = null;
     
     this.formModalPago = this.formBuilder.group({
       deposito: ['', Validators.required],
@@ -98,11 +105,15 @@ export class PagosModalComponent implements OnInit {
     });
   }
 
-  selectedDeposito(item){
-    //console.log(item.item);
+  selectedDeposito(item) {
+
+    console.log("METODO: selectedDeposito()");
+
     console.log(this.deposito);
+    
     this.codigodeposito = item.item.codigodeposito;
     console.log(this.codigodeposito);
+    
     this.modelDeposito = item.item;
     console.log(this.modelDeposito);
 
@@ -112,6 +123,9 @@ export class PagosModalComponent implements OnInit {
   }
 
   searchDeposito = (text$: Observable<Deposito>) => {
+
+    console.log("METODO: searchDeposito()");
+
     const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
     const clicksWithClosedPopup$ = this.clickDeposito$.pipe(filter(() => {
       if (this.instanceDeposito) {
@@ -124,9 +138,11 @@ export class PagosModalComponent implements OnInit {
     console.log('this.pago.codigopersona: ' + this.pago.codigopersona);
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-        switchMap( (searchText) => 
-        //this.albumService.artistLookup(searchText)
-        this.cuotasService.readDeposito(this.pago.codigopersona)
+        switchMap( (searchText) => {
+          let data = this.cuotasService.readDeposito(this.pago.codigopersona)
+          console.log(data);          
+          return data;
+        }
       )
     );
   }
@@ -141,16 +157,16 @@ export class PagosModalComponent implements OnInit {
     return value;
   }
 
-  savePagoCuotaLote(){
-    console.log('Metodo: savePagoCuotaLote()');
+  savePagoAsistencia() {
+    console.log('Metodo: savePagoAsistencia()');
 
     this.mensaje = '';
 
     console.log(this.formModalPago.value);
 
     // VALIDA LOS DATOS DE LA CUOTA
-    if (this.pago.codigocuota == null) {
-      this.mensaje = 'Ingrese el tipo de cuota a pagar.';
+    if (this.pago.codigoreunion == null) {
+      this.mensaje = 'Ingrese el tipo de reunion a pagar.';
       this.messagesService.warning(this.mensaje);
       return;
     }
@@ -194,50 +210,50 @@ export class PagosModalComponent implements OnInit {
     console.log('valorPagoCuotaLote: ' + valorPagoCuotaLote);
 
     if (valorPagoCuotaLote == null || valorPagoCuotaLote === '') {
-      this.mensaje = 'Ingrese el valor del pago de la cuota.';
+      this.mensaje = 'Ingrese el valor del pago de la multa.';
       this.messagesService.error(this.mensaje);
       return;
     }
 
-    if (valorPagoCuotaLote <= 0) {
+    if (valorPagoCuotaLote <= 0 || valorPagoCuotaLote == '0') {
       this.mensaje = 'El valor del pago de la cuota tiene que ser mayor a cero (0).';
       this.messagesService.error(this.mensaje);
       return;
     }
 
-    if (valorPagoCuotaLote > valorPendienteDeposito) {
-      this.mensaje = 'El valor del pago de la cuota no tiene que ser mayor al valor pendiente del deposito seleccionado (' + valorPendienteDeposito + ').';
-      this.messagesService.error(this.mensaje);
-      return;
-    }
-
     // VALIDA EL VALOR PAGO CUOTA NO SEA MAYOR AL VALOR DE LA CUOTA
-    let valorpagocuotaloteN: Number = Number(valorPagoCuotaLote);
-    let valorcuotaN: Number = Number(this.pago.valorcuota);
+    let valorPagoCuotaLoteN: Number = Number(valorPagoCuotaLote);
+    let valorMultaN: Number = Number(this.pago.valormulta);
 
-    if (valorpagocuotaloteN > valorcuotaN) {
-      this.mensaje = 'El valor del pago de la cuota no puede ser mayor al valor de la cuota ('+valorpagocuotaloteN+' - '+valorcuotaN+').';
+    if (valorPagoCuotaLoteN > valorMultaN) {
+      this.mensaje = 'El valor del pago: '+valorPagoCuotaLoteN+',  no puede ser mayor al valor de la multa: ' + valorMultaN;
       this.messagesService.error(this.mensaje);
       return;
     }
 
-    // VALIDA EL VALOR PAGO CUOTA PENDIENTE
-    let valorpagopendienteN = Number(valorcuotaN) - Number(this.valorpagocuotaloteTotal);
+    // VALIDA EL VALOR DEL PAGO PENDIENTE
+    if (valorPagoCuotaLoteN > valorPendienteDeposito) {
+      this.mensaje = 'El valor del pago: '+valorPagoCuotaLoteN+', no tiene que ser mayor al valor pendiente del deposito seleccionado: ' + valorPendienteDeposito;
+      this.messagesService.error(this.mensaje);
+      return;
+    }
+
+    let valorpagopendienteN = Number(valorMultaN) - Number(this.valorpagoTotal);
     
-    if (valorpagopendienteN > 0 && valorpagocuotaloteN > valorpagopendienteN) {
-      this.mensaje = 'El valor del pago de la cuota no puede ser mayor al valor pendiente de la cuota ('+valorpagocuotaloteN+' - '+valorpagopendienteN+').';
+    if (valorpagopendienteN > 0 && valorPagoCuotaLoteN > valorpagopendienteN) {
+      this.mensaje = 'El valor del pago: '+valorPagoCuotaLoteN+' no puede ser mayor al valor pendiente de la multa: '+valorpagopendienteN+' .';
       this.messagesService.error(this.mensaje);
       return;
     }
 
     // VALIDA SI EXISTE PAGO PENDIENTE DE LA CUOTA
-    var valorCuota: Number = Number(this.pago.valorcuota);
+    var valorMulta: Number = Number(this.pago.valormulta);
 
-    console.log('valorCuota: ' + valorCuota);
-    console.log('valorpagocuotaloteTotal: ' + this.valorpagocuotaloteTotal);
+    console.log('valorCuota: ' + valorMulta);
+    console.log('valorpagocuotaloteTotal: ' + this.valorpagoTotal);
     
-    if (this.valorpagocuotaloteTotal >= valorCuota) {
-      this.mensaje = 'La cuota ('+this.pago.descripcioncuota+') del lote ('+this.pago.codigoreferencia+') esta pagada completamente.'; 
+    if (this.valorpagoTotal >= valorMulta) {
+      this.mensaje = 'La multa: ('+this.pago.nombrereunion+') del lote ('+this.pago.codigoreferencia+') esta pagada completamente.'; 
       this.messagesService.warning(this.mensaje);
       return;
     }
@@ -248,6 +264,7 @@ export class PagosModalComponent implements OnInit {
 
     let pagoCuotaLote: PagoCuotaLote = new PagoCuotaLote();
 
+    pagoCuotaLote.codigoreunion = this.pago.codigoreunion;
     pagoCuotaLote.codigocuota = this.pago.codigocuota;
     pagoCuotaLote.codigolote = this.pago.codigolote;
     pagoCuotaLote.codigodeposito = datosForm.deposito.codigodeposito;    
@@ -259,29 +276,28 @@ export class PagosModalComponent implements OnInit {
       console.log("response:");
       console.log(response);
 
-      if (response) {
-        if (response.pagocuotalote && response.pagocuotalote.codigopagocuotalote !== null && response.pagocuotalote.codigopagocuotalote > 0) {
-          this.createForm();
-          this.modalRef.close();
+      if (response.pagocuotalote && response.pagocuotalote.codigopagocuotalote !== null && response.pagocuotalote.codigopagocuotalote > 0) {
+        this.createForm();
+        this.modalRef.close();
 
-          this.mensaje = 'El pago $'+  datosForm.valorpagocuotalote +' del socio ' + this.pago.cedula + ' se realizo correctamente.';
-          console.log(this.mensaje);
-          this.messagesService.info(this.mensaje);
-          console.log(this.mensaje);
-        }
-        else {
-          if (response.mensaje) {
-            this.mensaje = response.mensaje;
-            this.messagesService.error(response.mensaje);
-          } else {
-            this.mensaje = "Error al registrar el pago del deposito";
-            this.messagesService.error(this.mensaje);
-          }
+        this.mensaje = 'El registro de la multa:  '+  datosForm.valorpagocuotalote +' del socio ' + this.pago.primerapellido + ' ' + this.pago.primernombre + ' se realizo correctamente.';
+
+        this.messagesService.info(this.mensaje);
+      }
+      else {
+        if (response.mensaje) {
+          this.mensaje = response.mensaje;
+          this.messagesService.error(response.mensaje);
+        } else {
+          this.mensaje = "Error al registrar el pago del deposito";
+          this.messagesService.error(this.mensaje);
         }
       }
 
     });
+
     console.log('Fin guardar pago');
+
   }
 
 }

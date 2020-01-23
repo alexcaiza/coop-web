@@ -44,6 +44,7 @@ import { ReporteReunionesSociosAucentesComponent } from './reportes/reporte-reun
 import { ReporteReunionesSociosAucentesListComponent } from './reportes/reporte-reuniones-socios-aucentes/reporte-reuniones-socios-aucentes-list/reporte-reuniones-socios-aucentes-list.component';
 import { ReporteReunionesSociosAucentesContentComponent } from './reportes/reporte-reuniones-socios-aucentes/reporte-reuniones-socios-aucentes-content/reporte-reuniones-socios-aucentes-content.component';
 import { ReporteReunionesSociosAucentesSearchComponent } from './reportes/reporte-reuniones-socios-aucentes/reporte-reuniones-socios-aucentes-search/reporte-reuniones-socios-aucentes-search.component';
+import { AsistenciaModalComponent } from './modules/asistencias/asistencia-modal/asistencia-modal.component';
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import { ReporteReunionesSociosAucentesSearchComponent } from './reportes/report
     ReporteReunionesSociosAucentesComponent,
     ReporteReunionesSociosAucentesListComponent,
     ReporteReunionesSociosAucentesContentComponent,
-    ReporteReunionesSociosAucentesSearchComponent
+    ReporteReunionesSociosAucentesSearchComponent,
+    AsistenciaModalComponent
   ],
   imports: [
     BrowserModule,

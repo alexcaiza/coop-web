@@ -99,7 +99,7 @@ export class PagosListSearchComponent implements OnInit {
   }
 
   buscarCuotasLotesFilters() {
-    console.log('METODO: buscarDepositosFilters()');
+    console.log('METODO: buscarCuotasLotesFilters()');
 
     console.log(this.formBusqueda.value);
 
@@ -130,6 +130,8 @@ export class PagosListSearchComponent implements OnInit {
     params.codigolote = this.codigolote;
     params.codigocuota = this.codigocuota;
 
+    params.tiposcuota = 'CUO';
+
     if (this.formBusqueda.get("apellidosocio").value != null && this.formBusqueda.get("apellidosocio").value !== '') {
       params.apellidosocio = this.formBusqueda.get("apellidosocio").value;
     }
@@ -143,7 +145,7 @@ export class PagosListSearchComponent implements OnInit {
 
       this.pagos = [];
 
-      if (response.data) {
+      if (response && response.data) {
         this.pagos = response.data;
         console.log(this.pagos);
         this.siblingService.setPagos(this.pagos);

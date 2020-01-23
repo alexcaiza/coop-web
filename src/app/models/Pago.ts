@@ -11,6 +11,11 @@ export class Pago {
     fechainicio: Date;
     fechafin: Date;
 
+    //datos de la reunion
+    codigoreunion: Number;
+    valormulta: Number;
+    nombrereunion: String;
+
     //datos del lote
     codigolote: Number;
     codigoreferencia: String;
@@ -24,5 +29,9 @@ export class Pago {
     segundoapellido: String;
 
     valorpagocuotalote: Number;
-
+    
+    valorpagadocuota: Number;
+    valorpagadoreunion: Number;
+    valorpagadodeposito: Number;
+    
   }

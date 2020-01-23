@@ -11,6 +11,7 @@ export class Cuota {
     fechainicio: Date;
     fechafin: Date;
     ordencuota: Number;
+    tipocuota: String;
 
     //datos del lote
     codigolote: Number;

@@ -6,9 +6,10 @@ import {Injectable} from '@angular/core';
 export class PagoCuotaLote {
     codigopagocuotalote: Number;
     codigodeposito: Number;
-    codigocuota: Number;
     codigolote: Number;
+    codigocuota: Number;
+    codigoreunion: Number;    
     valorpagocuotalote: Number;
     estado: String;
-    fecharegistro: Date;
+    fecharegistro: Date;    
   }

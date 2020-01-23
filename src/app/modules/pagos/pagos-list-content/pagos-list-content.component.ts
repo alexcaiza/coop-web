@@ -10,6 +10,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Pago } from 'src/app/models/Pago';
 import { PagosModalComponent } from '../pagos-modal/pagos-modal.component';
+import { PagoType } from 'src/app/models/enum/PagoType';
 
 @Component({
   selector: 'app-pagos-list-content',
@@ -43,7 +44,7 @@ export class PagosListContentComponent implements OnInit {
   openModalPago(pago) {
     console.log(pago);
     console.log(this.childModalPago);
-    this.childModalPago.openModal(pago);
+    this.childModalPago.openModal(pago, "Pago de cuotas", PagoType.CUOTA);
   }
 
 }

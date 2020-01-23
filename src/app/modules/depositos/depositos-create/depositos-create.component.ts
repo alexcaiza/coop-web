@@ -1,3 +1,4 @@
+import { MessagesAppService } from './../../../services/messages-app/messages-app.service';
 import { CuotasService } from './../../../servicios/cuotas/cuotas.service';
 import { PersonasService } from './../../../servicios/personas/personas.service';
 import { DepositosService } from './../../../servicios/depositos/depositos.service';
@@ -41,7 +42,7 @@ export class DepositosCreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private depositosService: DepositosService,
     private personasService: PersonasService,
-    //public flashMessagesService: FlashMessagesService,
+    private messagesService: MessagesAppService,
     private cuotasService: CuotasService
     ) { }
 
@@ -84,18 +85,18 @@ export class DepositosCreateComponent implements OnInit {
     console.log(this.cedula);
 
     if (this.cedula == null || this.cedula === '') {
-      //this.flashMessagesService.show('Ingrese la cedula para buscar el socio.', { cssClass: 'alert-danger', timeout: 2000 });
+      this.messagesService.error('Ingrese la cedula para buscar el socio.');
       return;
     }
 
     this.personasService.readPersonaByCedula(this.cedula).subscribe((persona: Persona) => {
       if (persona == null) {
-        //this.flashMessagesService.show('No se encontro el socio con el numero de cedula: ' + this.cedula + '.', { cssClass: 'alert-danger', timeout: 2000 });
+        this.messagesService.error('No se encontro el socio con el numero de cedula: ' + this.cedula + '.');
       return;
       }
       this.persona = persona;
       console.log(this.persona);
-      //this.flashMessagesService.show('La busqueda del socio se realizo correctamente.', { cssClass: 'alert-success', timeout: 2000 });
+      this.messagesService.info('La busqueda del socio se realizo correctamente.');
     });
   }
 
@@ -105,7 +106,7 @@ export class DepositosCreateComponent implements OnInit {
     console.log(this.formGroup.value);
 
     if (this.cedula == null || this.cedula === '' || this.persona == null) {
-      //this.flashMessagesService.show('Ingrese la cedula para buscar el socio.', { cssClass: 'alert-danger', timeout: 2000 });
+      this.messagesService.error('Ingrese la cedula para buscar el socio.');
       return;
     }
 
@@ -113,7 +114,7 @@ export class DepositosCreateComponent implements OnInit {
     console.log('numerodeposito: ' + numerodeposito);
 
     if (numerodeposito == null || numerodeposito === '') {
-      //this.flashMessagesService.show('Ingrese el numero del deposito.', { cssClass: 'alert-danger', timeout: 2000 });
+      this.messagesService.error('Ingrese el numero del deposito.');
       return;
     }
 
@@ -121,7 +122,7 @@ export class DepositosCreateComponent implements OnInit {
     console.log('valordeposito: ' + valordeposito);
 
     if (valordeposito == null || valordeposito === '') {
-      //this.flashMessagesService.show('Ingrese el valor del deposito.', { cssClass: 'alert-danger', timeout: 2000 });
+      this.messagesService.error('Ingrese el valor del deposito.');
       return;
     }
 
@@ -130,7 +131,7 @@ export class DepositosCreateComponent implements OnInit {
     console.log('fechadeposito: ' + fechadeposito);
 
     if (fechadeposito == null || fechadeposito === '') {
-      //this.flashMessagesService.show('Ingrese la fecha del deposito.', { cssClass: 'alert-danger', timeout: 2000 });
+      this.messagesService.error('Ingrese la fecha del deposito.');
       return;
     }
 
@@ -139,7 +140,7 @@ export class DepositosCreateComponent implements OnInit {
     console.log('tipodeposito: ' + tipodeposito);
 
     if (tipodeposito == null || tipodeposito === '') {
-      //this.flashMessagesService.show('Seleccione el tipo de deposito.', { cssClass: 'alert-danger', timeout: 2000 });
+      this.messagesService.error('Seleccione el tipo de deposito.');
       return;
     }
 
@@ -171,11 +172,11 @@ export class DepositosCreateComponent implements OnInit {
       console.log(response);
 
       if (response.deposito && response.deposito.codigodeposito !== null && response.deposito.codigodeposito > 0) {
-        //this.flashMessagesService.show('El registro del deposito '+  params.numerodeposito +' del socio ' + this.persona.cedula + 'se realizo correctamente.', { cssClass: 'alert-success', timeout: 2000 });
+        this.messagesService.info('El registro del deposito '+  params.numerodeposito +' del socio ' + this.persona.cedula + 'se realizo correctamente.');
         this.buildForm();
       }
       else {
-        //this.flashMessagesService.show(response.mensaje, { cssClass: 'alert-danger', timeout: 5000 });
+        this.messagesService.error(response.mensaje);
       }
 
     });

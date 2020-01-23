@@ -54,6 +54,10 @@ export class CuotasService {
     return this.httpClient.get<any>(`${this.PHP_API_SERVER}/pago_cuota_lote_consulta.php${this.XDEBUG_SESSION_START_1}&codigocuota=${codigocuota}&codigolote=${codigolote}`);
   }
 
+  consultarPagoCuotaLoteSum2(codigocuota, codigolote, codigoreunion): Observable<any> {
+    return this.httpClient.get<any>(`${this.PHP_API_SERVER}/pago_cuota_lote_consulta.php${this.XDEBUG_SESSION_START_1}&codigocuota=${codigocuota}&codigolote=${codigolote},&codigoreunion=${codigoreunion}`);
+  }
+
   consultarCuotasLotes(codigocuota): Observable<any> {
     return this.httpClient.get<any>(`${this.PHP_API_SERVER}/read_cuotas_lotes.php${this.XDEBUG_SESSION_START_1}&codigocuota=${codigocuota}`);
   }
