@@ -1,11 +1,11 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Asistencias</h3>
+        <h3 class="panel-title">Reporte inasistencia:</h3>
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="panel-body">
-    <div style="margin-top: 1px;">
-        <table class="table table-hover table-sm table-bordered table-condensed table-striped">
+    <div style="margin: 3px 3px;">
+        <table class="table table-hover table-sm table-condensed">
             <thead class="thead-light">
                 <tr>
                     <th class="text-center">No</th>
@@ -14,9 +14,10 @@
                     <th class="text-center">Lote</th>
                     <th class="text-center">Lote anterior</th>
                     <th class="text-center" *ngIf="!totalizado">Reunion</th>
-                    <th class="text-center" *ngIf="totalizado">Total multa</th>
-                    <th class="text-center">Asistencia</th>
-                    <th class="text-center">Acciones</th>
+                    <th class="text-center" *ngIf="!totalizado">Asistencia</th>
+                    <th class="text-center">Multa</th>
+                    <th class="text-center">Pagado</th>
+                    <th class="text-center">Pendiente</th>
                 </tr>
             </thead>
 
@@ -28,34 +29,30 @@
                     <td>
                         {{ pago.primerapellido }} {{ pago.primernombre }}
                     </td>
-                    <td>{{ pago.cedula }}</td>
-                    <td>
+                    <td class="text-center">
+                        {{ pago.cedula }}
+                    </td>
+                    <td class="text-center" title="{{pago.codigolote}}">
                         {{ pago.codigoreferencia }}
                     </td>
-                    <td>
+                    <td class="text-center" title="{{pago.codigolote}}">
                         {{ pago.codigoreferenciaanterior }}
                     </td>
                     <td *ngIf="!totalizado">
                         {{ pago.nombrereunion }}
                     </td>
-                    <td *ngIf="totalizado">
-                        {{ pago.valormulta | currency }}
-                    </td>
-                    <td>
+                    <td *ngIf="!totalizado" class="text-center">
                         {{ pago.valorasistencia }}
                     </td>
-                    <td class="text-center">
-                        <!--
-                        <a [routerLink]="['/edit', deposito.id]" class="btn btn-primary btn-sm fontsize">Edit</a>
-                        -->
-                        <a 
-                            class="btn btn-sm btn-default align-top form-control-xs" 
-                            (click)="openModalPago(pago)"
-                            aria-label="Settings">
-                            <i class="fa fa-edit" aria-hidden="true"></i>
-                        </a>
+                    <td class="text-right">
+                        {{ pago.valormulta | currency }}
                     </td>
-
+                    <td class="text-right">
+                        {{ pago.valorpagadoreunion | currency }}
+                    </td>
+                    <td class="text-right">
+                        {{ pago.valormulta - pago.valorpagadoreunion | currency }}
+                    </td>
                 </tr>
             </tbody>
         </table>

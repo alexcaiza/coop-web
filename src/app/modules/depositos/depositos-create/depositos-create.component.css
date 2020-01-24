@@ -1,0 +1,15 @@
+::ng-deep .dropdown-menu { 
+    max-height: 175px; 
+    font-size: 11px;
+    display: block;
+    overflow-y: auto;
+}
+
+.form-deposito label {
+    font-size: 11px !important; 
+    color: #696969;
+}
+
+.form-deposito input {
+    font-size: 11px !important; 
+}

@@ -1,11 +1,11 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Asistencias</h3>
+        <h3 class="panel-title">Asistencias:</h3>
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="panel-body">
-    <div style="margin-top: 1px;">
-        <table class="table table-hover table-sm table-bordered table-condensed table-striped">
+    <div style="margin: 3px 3px;">
+        <table class="table table-hover table-sm table-condensed">
             <thead class="thead-light">
                 <tr>
                     <th class="text-center">No</th>
@@ -22,32 +22,32 @@
             </thead>
 
             <tbody>
-                <tr *ngFor="let pago of asistencias; let i=index">
+                <tr *ngFor="let pago of asistencias; let i=index" [ngClass]="{'rosa':(pago.valorasistencia != 'P' && pago.valorasistencia != 'J')}">
                     <td>
                         {{ i+1 }}
                     </td>
                     <td>
                         {{ pago.primerapellido }} {{ pago.primernombre }}
                     </td>
-                    <td>{{ pago.cedula }}</td>
-                    <td>
+                    <td class="text-center">{{ pago.cedula }}</td>
+                    <td class="text-center">
                         {{ pago.codigoreferencia }}
                     </td>
-                    <td>
+                    <td class="text-center">
                         {{ pago.codigoreferenciaanterior }}
                     </td>
                     <td>
                         {{ pago.nombrereunion }}
                     </td>
-                    <td>
+                    <td class="text-center">
                         {{ pago.valorasistencia }}
                     </td>
-                    <td>
+                    <td class="text-right">
                         <span *ngIf="(pago.valorasistencia != 'P' && pago.valorasistencia != 'J')">
                             {{ pago.valormulta | currency }}
                         </span>
                     </td>
-                    <td>
+                    <td class="text-right">
                         <span *ngIf="(pago.valorasistencia != 'P' && pago.valorasistencia != 'J')">
                             {{ pago.valorpagadoreunion | currency }}
                         </span>

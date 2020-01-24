@@ -19,4 +19,9 @@ export class Deposito {
     segundoapellido: String;
     estado: String;
     socios: Persona[];
+
+    valorpagadocuota: Number;
+    valorpagadoreunion: Number;
+    valorpagadodeposito: Number;
+    
   }

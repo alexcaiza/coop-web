@@ -30,13 +30,24 @@ export class DepositosCreateComponent implements OnInit {
   public codigosocio: Number;
 
   public cedula: string;
-  public persona: Persona;
+
+  //public persona: Persona;
+
+  public persona: Persona = new  Persona();
+  public modelPersona: any;
+  public codigopersona: Number;
 
   @ViewChild('instanceSocio', {static: true}) 
+  public instanceSocio: NgbTypeahead;
+
+  @ViewChild('instancePersona', { static: true })
   public instancePersona: NgbTypeahead;
 
   public focusSocio$ = new Subject<Persona>();
   public clickSocio$ = new Subject<Persona>();
+
+  public focusPersona$ = new Subject<Persona>();
+  public clickPersona$ = new Subject<Persona>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -61,6 +72,9 @@ export class DepositosCreateComponent implements OnInit {
     this.codigosocio = null;    
     this.socios = [];
 
+    this.modelPersona = null;
+    this.codigopersona = null;
+
     const dateLength = 10;
     const today = new Date().toISOString().substring(0, dateLength);
 
@@ -71,6 +85,7 @@ export class DepositosCreateComponent implements OnInit {
       tipodeposito: ['', Validators.required],
       numerodeposito: ['', Validators.required],
       socio: ['', Validators.required],
+      persona: ['', Validators.required],
     });
   }
 
@@ -105,7 +120,7 @@ export class DepositosCreateComponent implements OnInit {
 
     console.log(this.formGroup.value);
 
-    if (this.cedula == null || this.cedula === '' || this.persona == null) {
+    if (this.persona == null) {
       this.messagesService.error('Ingrese la cedula para buscar el socio.');
       return;
     }
@@ -192,8 +207,25 @@ export class DepositosCreateComponent implements OnInit {
     console.log('text$:' + text$);
     
     const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-    const clicksWithClosedPopup$ = this.clickSocio$.pipe(filter(() => !this.instancePersona.isPopupOpen()));
+    const clicksWithClosedPopup$ = this.clickSocio$.pipe(filter(() => !this.instanceSocio.isPopupOpen()));
     const inputFocus$ = this.focusSocio$;
+
+    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+        switchMap( (searchText) => {
+          let params: Persona = new Persona();
+          params.primerapellido = "" + searchText;
+          return this.cuotasService.readPersonas2(params)
+        }
+      )
+    );
+  }
+
+  searchPersona = (text$: Observable<string>) => {
+    console.log('text$:' + text$);
+    
+    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+    const clicksWithClosedPopup$ = this.clickPersona$.pipe(filter(() => !this.instancePersona.isPopupOpen()));
+    const inputFocus$ = this.focusPersona$;
 
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
         switchMap( (searchText) => {
@@ -227,6 +259,41 @@ export class DepositosCreateComponent implements OnInit {
     this.formGroup.patchValue({
       socio: ""
     });
+  }
+
+  cleanPersona() {
+    console.log('METODO: cleanPersona()');
+
+    this.formGroup.patchValue({
+      persona: ""
+    });
+
+    this.persona = null;
+
+  }
+
+  selectedPersona(item) {
+    console.log('METODO: selectedPersona()');
+
+    this.codigopersona = item.item.codigopersona;
+    console.log('codigopersona: ' + this.codigopersona);
+    
+    this.modelPersona = item.item;
+    console.log('modelPersona: ' + this.modelPersona);
+
+    
+    this.persona = this.modelPersona;
+  }
+
+  resultFormatPersonaListValue(value: any) {            
+    return value.primerapellido + " " + value.primernombre;
+  } 
+  
+  inputFormatPersonaListValue(value: any)   {
+    if(value.primerapellido) {
+      return value.primerapellido + " " + value.primernombre;
+    }
+    return value;
   }
 
   resultFormatSocioListValue(value: any) {            

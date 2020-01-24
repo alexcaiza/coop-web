@@ -17,7 +17,15 @@ export class Asistencia {
 
     // Reunion
     codigoreunion: Number;
-    valorasistencia: String;
     nombrereunion: String;
     valormulta: Number;
+
+    // Asistencia
+    valorasistencia: String;
+
+    // Valores pagados
+    valorpagadocuota: Number;
+    valorpagadoreunion: Number;
+    valorpagadodeposito: Number;
+    
   }

@@ -4,13 +4,15 @@
         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
     </div>
     <div class="panel-body">
-        <table class="table table-hover table-sm table-condensed table-striped">
+        <table class="table table-hover table-sm table-condensed">
             <thead class="thead-light">
                 <tr>
                     <th>Cedula</th>
                     <th>Nombre</th>
                     <th>Deposito</th>
                     <th>Valor</th>
+                    <th>Utilizado</th>
+                    <th>A favor</th>
                     <th>Fecha</th>
                     <th>Tipo</th>
                     <th>Acciones</th>
@@ -28,7 +30,13 @@
                         {{ deposito.numerodeposito }}
                     </td>
                     <td>
-                        {{ deposito.valordeposito }}
+                        {{ deposito.valordeposito | currency }}
+                    </td>
+                    <td>
+                        {{ deposito.valorpagadodeposito | currency }}
+                    </td>
+                    <td>
+                        {{ deposito.valordeposito - deposito.valorpagadodeposito | currency }}
                     </td>
                     <td>
                         {{ deposito.fechadeposito | date: 'yyyy-MM-dd' }}
@@ -36,11 +44,11 @@
                     <td>
                         {{ deposito.tipodeposito }}
                     </td>
-                    <td>
+                    <td class="text-center">
                         <!--
                         <a [routerLink]="['/edit', deposito.id]" class="btn btn-primary btn-sm fontsize">Edit</a>
                         -->
-                        <a class="btn btn-sm btn-default float-left align-top form-control-xs" routerLinkActive="active"
+                        <a class="btn btn-sm btn-default align-top form-control-xs" routerLinkActive="active"
                             (click)="buscarDepositos()" aria-label="Settings">
                             <i class="fa fa-edit" aria-hidden="true"></i>
                         </a>
