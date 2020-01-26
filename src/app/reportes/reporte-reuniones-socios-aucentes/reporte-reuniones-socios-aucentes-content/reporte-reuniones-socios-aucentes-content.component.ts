@@ -1,3 +1,4 @@
+import { ExcelService } from './../../../services/commons/excel.service';
 import { SiblingService } from './../../../modules/services-sibling/sibling.service';
 import { Asistencia } from 'src/app/models/Asistencia';
 import { Component, OnInit } from '@angular/core';
@@ -17,7 +18,8 @@ export class ReporteReunionesSociosAucentesContentComponent implements OnInit {
   public totalizado: boolean = false;
 
   constructor(
-    private siblingService: SiblingService
+    private siblingService: SiblingService,
+    private excelService: ExcelService
   ) {
     this.siblingReporteReunionesSociosAucentes$ = siblingService.siblingReporteReunionesSociosAucentes$;
    }
@@ -38,5 +40,9 @@ export class ReporteReunionesSociosAucentesContentComponent implements OnInit {
       console.log(this.asistencias);
       console.log(this.totalizado);
     });
+  }
+
+  exportAsXLSX():void {
+    this.excelService.exportAsExcelFile(this.asistencias, 'Reporte_de_inasistencia');
   }
 }

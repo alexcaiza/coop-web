@@ -6,7 +6,7 @@
       </button>
 	</div>	
     <div class="modal-body">
-        <form [formGroup]="formModalPago" (ngSubmit)="savePagoCuotaLote()">
+        <form [formGroup]="formModalPago">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="textValorCuota" class="col-sm-6 col-form-label col-form-label-sm">Reunion inasistencia:</label>
@@ -99,7 +99,7 @@
                     <div class="form-row">
                         <div class="form-group col-sm-4">
                           <label for="inputMultaPen">Pendiente</label>
-                          <input type="text" readonly class="form-control-plaintext" id="inputMultaPen" value="{{  pago.valormulta - valorpagoTotal | currency}}">
+                          <input type="text" readonly class="form-control-plaintext" id="inputMultaPen" value="{{  valorpendiente | currency}}">
                         </div>
                         <div class="form-group col-sm-4">
                           <label for="inputMultaPag">Pagado</label>

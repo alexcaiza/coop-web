@@ -14,8 +14,7 @@
                     <th>Utilizado</th>
                     <th>A favor</th>
                     <th>Fecha</th>
-                    <th>Tipo</th>
-                    <th>Acciones</th>
+                    <th>Tipo</th>                    
                 </tr>
             </thead>
 
@@ -44,16 +43,6 @@
                     <td>
                         {{ deposito.tipodeposito }}
                     </td>
-                    <td class="text-center">
-                        <!--
-                        <a [routerLink]="['/edit', deposito.id]" class="btn btn-primary btn-sm fontsize">Edit</a>
-                        -->
-                        <a class="btn btn-sm btn-default align-top form-control-xs" routerLinkActive="active"
-                            (click)="buscarDepositos()" aria-label="Settings">
-                            <i class="fa fa-edit" aria-hidden="true"></i>
-                        </a>
-                    </td>
-
                 </tr>
             </tbody>
         </table>

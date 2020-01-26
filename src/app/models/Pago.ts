@@ -33,5 +33,7 @@ export class Pago {
     valorpagadocuota: Number;
     valorpagadoreunion: Number;
     valorpagadodeposito: Number;
+
+    valorpendiente: Number;
     
   }

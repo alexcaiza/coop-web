@@ -37,6 +37,8 @@ export class PagosListSearchComponent implements OnInit {
   public codigopersona: Number;
   public codigolote: Number;
 
+  public totalizado: boolean = false;
+
   @ViewChild('instanceCuota', { static: true })
   public instanceCuota: NgbTypeahead;
 
@@ -84,6 +86,7 @@ export class PagosListSearchComponent implements OnInit {
       apellidosocio: ['', Validators.required],
       nombresocio: ['', Validators.required],
       lote: ['', Validators.required],
+      totalizado: [''],
     });
 
   }
@@ -102,9 +105,7 @@ export class PagosListSearchComponent implements OnInit {
     console.log('METODO: buscarCuotasLotesFilters()');
 
     console.log(this.formBusqueda.value);
-
-    let params: any = {};
-
+  
     const persona = this.formBusqueda.get("persona").value;
     console.log('persona: ' + persona);
 
@@ -126,6 +127,8 @@ export class PagosListSearchComponent implements OnInit {
       this.codigolote = null;
     }
 
+    let params: any = {};
+
     params.codigopersona = this.codigopersona;
     params.codigolote = this.codigolote;
     params.codigocuota = this.codigocuota;
@@ -138,22 +141,37 @@ export class PagosListSearchComponent implements OnInit {
     if (this.formBusqueda.get("nombresocio").value != null && this.formBusqueda.get("nombresocio").value !== '') {
       params.nombresocio = this.formBusqueda.get("nombresocio").value;
     }
+    if (this.formBusqueda.get("totalizado").value != null && this.formBusqueda.get("totalizado").value !== '') {
+      params.totalizado = this.formBusqueda.get("totalizado").value;
+    }
+
+    console.log(params);
+
+    this.pagos = [];
 
     this.cuotasService.consultarCuotasLotes2(params).subscribe((response: any) => {
 
       console.log(response);
 
-      this.pagos = [];
+      if (response) {
+        
+        if (response.status == 0) {
+          if (response.mensaje) {
+            this.messagesService.error(response.mensaje);
+          }
+          return;
+        }
 
-      if (response && response.data) {
-        this.pagos = response.data;
-        console.log(this.pagos);
-        this.siblingService.setPagos(this.pagos);
+        if (response.data) {
+          this.pagos = response.data;
+          console.log(this.pagos);
+          this.siblingService.setPagos(this.pagos);
 
-        if (this.pagos.length > 0) {
-          this.messagesService.success('La busqueda se realizo correctamente.');
-        } else {
-          this.messagesService.warning('No se encontraron registros con los datos de busqueda.');
+          if (this.pagos.length > 0) {
+            this.messagesService.success('La busqueda se realizo correctamente.');
+          } else {
+            this.messagesService.warning('No se encontraron registros con los datos de busqueda.');
+          }
         }
       }
     });

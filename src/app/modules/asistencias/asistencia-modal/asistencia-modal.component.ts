@@ -23,19 +23,20 @@ export class AsistenciaModalComponent implements OnInit {
   public titleModal: string;
   public pagoType: PagoType;
 
-  pago: Pago;
+  public pago: Pago;
 
-  codigodeposito: Number;
+  public codigodeposito: Number;
 
-  deposito: Deposito = new Deposito();
+  public deposito: Deposito = new Deposito();
 
-  modelDeposito: any;
+  public modelDeposito: any;
 
   public valorpagoTotal: Number;  
+  public valorpendiente: Number;
 
   private modalRef: NgbModalRef;
 
-  formModalPago: FormGroup;
+  public formModalPago: FormGroup;
 
   @ViewChild("childmodalasistencia", { static: false }) 
   childmodalasistencia: any;
@@ -78,6 +79,8 @@ export class AsistenciaModalComponent implements OnInit {
         this.valorpagoTotal = data.data.valorpago;
       }
     });
+
+    this.valorpendiente = Number(this.pago.valormulta) - Number(this.valorpagoTotal);
 
     this.modalRef = this.modalService.open(this.childmodalasistencia, { size: 'xl' });
     this.modalRef.result.then(result => {}, reason => {});

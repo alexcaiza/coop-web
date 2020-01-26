@@ -1,3 +1,4 @@
+import { ExcelService } from './services/commons/excel.service';
 import { MessagesAppService } from './services/messages-app/messages-app.service';
 import { SiblingService } from './modules/services-sibling/sibling.service';
 
@@ -10,6 +11,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { FlashMessagesModule } from 'ngx-flash-messages';
+
+import { NgHttpLoaderModule } from 'ng-http-loader';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -45,6 +48,9 @@ import { ReporteReunionesSociosAucentesListComponent } from './reportes/reporte-
 import { ReporteReunionesSociosAucentesContentComponent } from './reportes/reporte-reuniones-socios-aucentes/reporte-reuniones-socios-aucentes-content/reporte-reuniones-socios-aucentes-content.component';
 import { ReporteReunionesSociosAucentesSearchComponent } from './reportes/reporte-reuniones-socios-aucentes/reporte-reuniones-socios-aucentes-search/reporte-reuniones-socios-aucentes-search.component';
 import { AsistenciaModalComponent } from './modules/asistencias/asistencia-modal/asistencia-modal.component';
+import { ReportePagosCuotasLotesComponent } from './reportes/reporte-pagos-cuotas-lotes/reporte-pagos-cuotas-lotes.component';
+import { ReportePagosCuotasLotesSearchComponent } from './reportes/reporte-pagos-cuotas-lotes/reporte-pagos-cuotas-lotes-search/reporte-pagos-cuotas-lotes-search.component';
+import { ReportePagosCuotasLotesContentComponent } from './reportes/reporte-pagos-cuotas-lotes/reporte-pagos-cuotas-lotes-content/reporte-pagos-cuotas-lotes-content.component';
 
 
 @NgModule({
@@ -82,7 +88,10 @@ import { AsistenciaModalComponent } from './modules/asistencias/asistencia-modal
     ReporteReunionesSociosAucentesListComponent,
     ReporteReunionesSociosAucentesContentComponent,
     ReporteReunionesSociosAucentesSearchComponent,
-    AsistenciaModalComponent
+    AsistenciaModalComponent,
+    ReportePagosCuotasLotesComponent,
+    ReportePagosCuotasLotesSearchComponent,
+    ReportePagosCuotasLotesContentComponent
   ],
   imports: [
     BrowserModule,
@@ -91,11 +100,13 @@ import { AsistenciaModalComponent } from './modules/asistencias/asistencia-modal
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
-    FlashMessagesModule
+    FlashMessagesModule,
+    NgHttpLoaderModule.forRoot(),
   ],
   providers: [
     SiblingService,
-    MessagesAppService
+    MessagesAppService,
+    ExcelService
   ],
   bootstrap: [AppComponent]
 })

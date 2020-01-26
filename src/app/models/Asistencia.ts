@@ -27,5 +27,7 @@ export class Asistencia {
     valorpagadocuota: Number;
     valorpagadoreunion: Number;
     valorpagadodeposito: Number;
+
+    valorpendiente: Number;
     
   }
