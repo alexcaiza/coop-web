@@ -57,6 +57,8 @@ export class PagosModalComponent implements OnInit {
   }
 
   openModal(pago: Pago, titleModal: string, pagoType: PagoType) {
+
+    console.log('Metodo openModal(.)');
     
     this.pago = pago;
     this.titleModal = titleModal;

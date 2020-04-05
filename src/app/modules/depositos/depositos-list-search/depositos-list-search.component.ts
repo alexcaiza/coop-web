@@ -46,13 +46,14 @@ export class DepositosListSearchComponent implements OnInit {
 
   buscarDepositos() {
     console.log('METODO: buscarDepositos()');
-    this.depositosService.readDepositos(this.formBusqueda.value).subscribe((depositos: Deposito[]) => {
+    this.depositosService.readDepositos(this.formBusqueda.value).subscribe((response: any) => {
       
-      this.depositos = depositos;
-      
-      console.log(this.depositos);
+      console.log(response);
+
+      this.depositos = response.depositos;
       
       this.siblingService.setDepositos(this.depositos);
+      
       if (this.depositos.length > 0) {
         this.messagesService.info('La busqueda de depositos se realizo correctamente.');
       } else{
@@ -74,8 +75,9 @@ export class DepositosListSearchComponent implements OnInit {
 
     let paramsSearch = this.formBusqueda.value;
 
-    this.depositosService.readDepositos(paramsSearch).subscribe((depositos: Deposito[]) => {
-      this.depositos = depositos;
+    this.depositosService.readDepositos(paramsSearch).subscribe((response: any) => {
+      console.log(response);
+      this.depositos = response.depositos;
       console.log(this.depositos);
       //this.flashMessagesService.show('La busqueda de depositos se realizo correctamente.', { cssClass: 'alert-success', timeout: 4000 });
     });

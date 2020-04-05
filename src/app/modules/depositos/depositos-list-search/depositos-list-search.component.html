@@ -16,6 +16,11 @@
             <input type="text" class="form-control form-control-xs-2" placeholder="Cedula" id="txtCedulaID"
                 (keyup.enter)="buscarDepositosFilters()" formControlName="cedula">
         </div>
+        <div class="form-group p-1 m-0">
+            <label for="txtCedulaID" class="p-0 m-0">Nro deposito:</label>
+            <input type="text" class="form-control form-control-xs-2" placeholder="Deposito" id="txtCedulaID"
+                (keyup.enter)="buscarDepositosFilters()" formControlName="numerodeposito">
+        </div>
         <div class="form-group p-1 m-0 text-center">
             <button type="submit" class="btn btn-primary form-control-xs-2 m-1"
                 (click)="buscarDepositos()">Busqueda</button>
